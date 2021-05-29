@@ -1,6 +1,6 @@
 <?php
 require 'include/init.php';
-if(!isset($_SESSION['user'])){
+if (!isset($_SESSION['user'])) {
     redirect('login.php');
 }
 $id = $_GET['id'];
@@ -9,7 +9,7 @@ $result = $db->query("SELECT * FROM user WHERE id = $id");
 $user = $result->fetch_assoc();
 var_dump($user);
 
-if(!isset($_SESSION["counted_$id"])) {
+if (!isset($_SESSION["counted_$id"])) {
     $result = $db->query("UPDATE user SET visit_count=visit_count+1 WHERE id = $id");
     $_SESSION["counted_$id"] = 1;
 }
@@ -24,9 +24,15 @@ if(!isset($_SESSION["counted_$id"])) {
     <title>Document</title>
 </head>
 <body>
-<h1><?= $user['firstname']. " " . $user['lastname']?></h1>
-Email: <?=$user['email'] ?><br>
-Age: <?=$user['age'] ?><br>
-
+<h1><?= $user['firstname'] . " " . $user['lastname'] ?></h1>
+Email: <?= $user['email'] ?><br>
+Age: <?= $user['age'] ?><br>
+<?php
+if (file_exists("./images/$user[id].jpg")) {
+    ?>
+    <img src="./images/<?= $user['id'] ?>.jpg" width="200">
+    <?php
+}
+?>
 </body>
 </html>

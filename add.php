@@ -1,11 +1,11 @@
 <?php
 require 'include/init.php';
-if(!isset($_SESSION['user'])){
+if (!isset($_SESSION['user'])) {
     redirect('login.php');
 }
 
 
-if($_SERVER['REQUEST_METHOD'] == "POST"){
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $firstname = $_REQUEST['firstname'];
     $lastname = $_REQUEST['lastname'];
     $email = $_REQUEST['email'];
@@ -14,13 +14,19 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     $query = "INSERT INTO user SET firstname='$firstname', lastname='$lastname', email='$email', age='$age' ";
     $result = $db->query($query);
 
+    if (isset($_FILES['image'])) {
+        $image = $_FILES['image'];
+
+        if ($image['error'] == UPLOAD_ERR_OK) {
+            move_uploaded_file($image['tmp_name'], "./images/".$db->insert_id.".jpg");
+        }
+
+
+    }
+
+
     redirect('index.php');
 }
-
-
-
-
-
 
 
 ?>
@@ -34,7 +40,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     <title>Document</title>
 </head>
 <body>
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <label>
         Firstname: <input name="firstname">
     </label><br>
@@ -47,7 +53,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     <label>
         age: <input name="age">
     </label><br>
-
+    <input type="file" name="image"><br><br>
     <input type="submit" value="Add User">
 </form>
 </body>
