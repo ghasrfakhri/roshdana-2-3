@@ -3,9 +3,9 @@ require 'include/init.php';
 $msg = '';
 if (isPostMethod()) {
     $email = $_POST['email'];
-    $password = $_POST['password'];
+    $hash = sha1($_POST['password']);
 
-    $query = "SELECT * FROM user WHERE email='$email' and password='$password'";
+    $query = "SELECT * FROM user WHERE email='$email' and password='$hash'";
     $result = $db->query($query);
 
     if ($result->num_rows > 0) {
@@ -30,6 +30,7 @@ if (isPostMethod()) {
     <title>Document</title>
 </head>
 <body>
+
 <?= $msg ?>
 <form method="post">
     <label>
@@ -40,5 +41,7 @@ if (isPostMethod()) {
     </label><br>
     <input type="submit" value="Login">
 </form>
+
+<a href="register.php">Registration</a>
 </body>
 </html>
