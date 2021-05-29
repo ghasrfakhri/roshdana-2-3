@@ -38,9 +38,9 @@ $users = $result->fetch_all(MYSQLI_ASSOC);
     foreach ($users as $user){
         echo
         "<tr>
-            <td>$i</td>
+            <td>{$i}</td>
             <td>
-            <a href='view.php?id=$user[id]'>$user[firstname] $user[lastname]</a>
+            <a href='view.php?id={$user['id']}'>$user[firstname] $user[lastname]</a>
             <a style='color: red' href='delete.php?id=$user[id]'>x</a>
             <a style='color: green' href='edit.php?id=$user[id]'>e</a>
             </td>
