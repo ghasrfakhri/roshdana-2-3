@@ -1,6 +1,8 @@
 <?php
 require 'include/init.php';
-
+if(!isset($_SESSION['user'])){
+    redirect('login.php');
+}
 $id = $_GET['id'];
 
 if (isPostMethod()) {

@@ -1,9 +1,18 @@
 <?php
 require 'include/init.php';
-
+if(!isset($_SESSION['user'])){
+    redirect('login.php');
+}
 $id = $_GET['id'];
+
 $result = $db->query("SELECT * FROM user WHERE id = $id");
 $user = $result->fetch_assoc();
+var_dump($user);
+
+if(!isset($_SESSION["counted_$id"])) {
+    $result = $db->query("UPDATE user SET visit_count=visit_count+1 WHERE id = $id");
+    $_SESSION["counted_$id"] = 1;
+}
 ?>
 <!doctype html>
 <html lang="en">

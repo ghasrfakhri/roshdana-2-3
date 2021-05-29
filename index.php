@@ -1,6 +1,10 @@
 <?php
 require 'include/init.php';
 
+if(!isset($_SESSION['user'])){
+    redirect('login.php');
+}
+
 $result = $db->query("SELECT * FROM user ");
 $users = $result->fetch_all(MYSQLI_ASSOC);
 
@@ -15,6 +19,9 @@ $users = $result->fetch_all(MYSQLI_ASSOC);
     <title>Document</title>
 </head>
 <body>
+<h1>Hello <?= $_SESSION['user']['firstname']?></h1>
+<a href="logout.php">Logout</a>
+
 <a href="add.php">
     add new
 </a>
