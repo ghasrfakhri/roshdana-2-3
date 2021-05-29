@@ -10,8 +10,9 @@ if (isPostMethod()) {
     $lastname = $_REQUEST['lastname'];
     $email = $_REQUEST['email'];
     $age = $_REQUEST['age'];
+    $categoryId = $_REQUEST['category'];
 
-    $query = "UPDATE user SET firstname='$firstname', lastname='$lastname', email='$email', age='$age' WHERE id=$id ";
+    $query = "UPDATE user SET firstname='$firstname', lastname='$lastname', email='$email', age='$age', category_id='$categoryId' WHERE id=$id ";
     $result = $db->query($query);
 
     redirect('index.php');
@@ -19,6 +20,10 @@ if (isPostMethod()) {
 
 $result = $db->query("SELECT * FROM user WHERE id = $id");
 $user = $result->fetch_assoc();
+
+$query = "SELECT * FROM category ";
+$result = $db->query($query);
+$categories = $result->fetch_all(MYSQLI_ASSOC);
 
 ?>
 <!doctype html>
@@ -44,7 +49,21 @@ $user = $result->fetch_assoc();
     <label>
         age: <input name="age" value="<?= $user['age'] ?>">
     </label><br>
-
+    <label> Category:
+        <select name="category">
+            <?php
+            foreach ($categories as $category){
+                if($user['category_id'] == $category['id']){
+                    $s = "selected";
+                }else{
+                    $s = "";
+                }
+                echo "<option $s value='$category[id]'>$category[title]</option>";
+            }
+            ?>
+        </select>
+    </label>
+    <br><br>
     <input type="submit" value="Edit User">
 </form>
 </body>

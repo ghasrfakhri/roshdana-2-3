@@ -5,7 +5,7 @@ if(!isset($_SESSION['user'])){
     redirect('login.php');
 }
 
-$result = $db->query("SELECT user.id, firstname,lastname,title as category FROM `user` INNER JOIN category ON user.category_id=category.id ");
+$result = $db->query("SELECT * FROM user ");
 $users = $result->fetch_all(MYSQLI_ASSOC);
 
 ?>
@@ -36,6 +36,15 @@ $users = $result->fetch_all(MYSQLI_ASSOC);
     <?php
     $i = 1;
     foreach ($users as $user){
+        $query = "SELECT title FROM category WHERE id=$user[category_id]";
+        $result = $db->query($query);
+        if($result == false){
+            echo $query."<br>";
+            echo $db->error;
+            exit;
+        }
+        list($category) = $result->fetch_row();
+//        list($a, $b, $c) = [1,2,3];
         echo
         "<tr>
             <td>$i</td>
@@ -45,7 +54,7 @@ $users = $result->fetch_all(MYSQLI_ASSOC);
             <a style='color: green' href='edit.php?id=$user[id]'>e</a>
             </td>
             <td>
-            $user[category]
+            $category
             </td>
          </tr>";
         $i++;

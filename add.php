@@ -10,8 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $lastname = $_REQUEST['lastname'];
     $email = $_REQUEST['email'];
     $age = $_REQUEST['age'];
+    $categoryId = $_REQUEST['category'];
 
-    $query = "INSERT INTO user SET firstname='$firstname', lastname='$lastname', email='$email', age='$age' ";
+    $query = "INSERT INTO user SET firstname='$firstname', lastname='$lastname', email='$email', age='$age', category_id='$categoryId' ";
     $result = $db->query($query);
 
     if (isset($_FILES['image'])) {
@@ -27,6 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     redirect('index.php');
 }
+
+$query = "SELECT * FROM category ";
+$result = $db->query($query);
+$categories = $result->fetch_all(MYSQLI_ASSOC);
 
 
 ?>
@@ -53,6 +58,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <label>
         age: <input name="age">
     </label><br>
+
+    <label> Category:
+    <select name="category">
+        <?php
+        foreach ($categories as $category){
+            echo "<option value='$category[id]'>$category[title]</option>";
+        }
+        ?>
+    </select>
+    </label>
+    <br><br>
+
     <input type="file" name="image"><br><br>
     <input type="submit" value="Add User">
 </form>
