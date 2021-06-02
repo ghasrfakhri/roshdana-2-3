@@ -1,9 +1,6 @@
 <?php
 require 'include/init.php';
-if (!isset($_SESSION['user'])) {
-    redirect('login.php');
-}
-
+redirectIfUserNotLogin();
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $firstname = $_REQUEST['firstname'];

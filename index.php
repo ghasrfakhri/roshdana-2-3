@@ -1,9 +1,7 @@
 <?php
 require 'include/init.php';
 
-if(!isset($_SESSION['user'])){
-    redirect('login.php');
-}
+redirectIfUserNotLogin();
 
 $result = $db->query("SELECT user.id, firstname,lastname,title as category FROM `user` INNER JOIN category ON user.category_id=category.id ");
 $users = $result->fetch_all(MYSQLI_ASSOC);

@@ -1,8 +1,7 @@
 <?php
 require 'include/init.php';
-if(!isset($_SESSION['user'])){
-    redirect('login.php');
-}
+redirectIfUserNotLogin();
+
 $id = $_GET['id'];
 $result = $db->query("DELETE FROM user WHERE id = $id");
 

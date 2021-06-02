@@ -1,9 +1,8 @@
 <?php
 require 'include/init.php';
 
-if(!isset($_SESSION['user'])){
-    redirect('login.php');
-}
+redirectIfUserNotLogin();
+
 
 $result = $db->query("SELECT * FROM user ");
 $users = $result->fetch_all(MYSQLI_ASSOC);
