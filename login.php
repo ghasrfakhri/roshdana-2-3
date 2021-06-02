@@ -1,16 +1,17 @@
 <?php
 require 'include/init.php';
 $msg = '';
+
+
+
+
+
+
 if (isPostMethod()) {
     $email = $_POST['email'];
-    $hash = sha1($_POST['password']);
+    $password = $_POST['password'];
 
-    $query = "SELECT * FROM user WHERE email='$email' and password='$hash'";
-    $result = $db->query($query);
-
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-        $_SESSION['user'] = $user;
+    if (login($email, $password)) {
         redirect('index.php');
     } else {
         $msg = "Incorrect Username or Password";
