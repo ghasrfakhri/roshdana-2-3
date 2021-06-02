@@ -3,13 +3,12 @@ require 'include/init.php';
 $msg = '';
 
 
-
-
-
+// XSS , SQL Injection
+//<script>alert('hackers are here.'); window.location = "http://google.com"</script>;
 
 if (isPostMethod()) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = $db->real_escape_string($_POST['email']);
+    $password = $db->real_escape_string($_POST['password']);
 
     if (login($email, $password)) {
         redirect('index.php');
