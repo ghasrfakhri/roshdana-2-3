@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $query = "INSERT INTO user SET firstname='$firstname', lastname='$lastname', email='$email', password='$hash' ";
         $result = $db->query($query);
         if($result == false){
-            echo "Error";
+            $msg =  "Error";
         }
     }
 

@@ -1,7 +1,7 @@
 <?php
 require 'include/init.php';
 
-redirectIfUserNotLogin();
+//redirectIfUserNotLogin();
 
 $users = getUserList();
 
