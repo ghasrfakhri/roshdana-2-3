@@ -22,7 +22,7 @@ function redirectIfUserNotLogin(){
 function getUserList(){
     global $db;
 
-    $result = $db->query("SELECT user.id, firstname,lastname,title as category FROM `user` INNER JOIN category ON user.category_id=category.id ");
+    $result = $db->query("SELECT user.id, firstname,lastname,title as category FROM `user` LEFT JOIN category ON user.category_id=category.id ");
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 

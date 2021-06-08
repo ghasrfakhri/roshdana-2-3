@@ -1,7 +1,7 @@
 <?php
 require 'include/init.php';
 
-$mgs = "";
+$msg = "";
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $firstname = $_REQUEST['firstname'];
     $lastname = $_REQUEST['lastname'];
@@ -10,14 +10,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $passwordRepeat = $_REQUEST['password_repeat'];
 
     if ($password != $passwordRepeat) {
-        $mgs = "Password and its repeat is not equal";
+        $msg = "Password and its repeat is not equal";
     } else {
-        $mgs = "Registration Complete";
+        $msg = "Registration Complete";
         $hash = sha1($password);
         $query = "INSERT INTO user SET firstname='$firstname', lastname='$lastname', email='$email', password='$hash' ";
         $result = $db->query($query);
         if($result == false){
-            $msg =  "Error";
+            $msg =  "Error: ".$db->error;
         }
     }
 
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </head>
 <body>
 <?php
-echo $mgs;
+echo $msg;
 
 
 ?>
